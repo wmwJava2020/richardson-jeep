@@ -10,6 +10,8 @@ import com.xpo.dfw.customer.repository.CustomerRepository;
 import com.xpo.dfw.customer.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +22,10 @@ import java.util.List;
  * {@link CustomerRepository} (MySQL via Spring Data JPA).
  */
 @Service
-@Slf4j
+//@Slf4j
 public class CustomerServiceImpl implements CustomerService {
+
+    private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
@@ -47,6 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional(readOnly = true)
     public CustomerResponse getCustomerByEmail(String email) {
+        log.info("Fetching customer by email={}", email);
         return customerMapper.toResponse(findEntityByEmail(email));
     }
 
@@ -65,13 +70,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public CustomerResponse updateCustomer(String email, CustomerRequest request) {
         Customer existing = findEntityByEmail(email);
-
+       log.info("Updating customer id={} email={}", existing.getId(), existing.getEmail());
         if (!existing.getEmail().equalsIgnoreCase(request.getEmail())
                 && customerRepository.existsByEmail(request.getEmail())) {
             throw new DuplicateResourceException("Customer with email '" + request.getEmail() + "' already exists");
         }
 
         customerMapper.updateEntity(existing, request);
+        log.info("Updated customer entity id={} email={}", existing.getId(), existing.getEmail());
+
         Customer saved = customerRepository.save(existing);
         log.info("Updated customer id={} email={}", saved.getId(), saved.getEmail());
         return customerMapper.toResponse(saved);
