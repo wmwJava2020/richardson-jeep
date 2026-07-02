@@ -20,32 +20,37 @@ import java.util.List;
  * {@link CustomerRepository} (MySQL via Spring Data JPA).
  */
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
+
+    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper) {
+        this.customerRepository = customerRepository;
+        this.customerMapper = customerMapper;
+    }
+
     @Override
     @Transactional
     public CustomerResponse createCustomer(CustomerRequest request) {
-        if (customerRepository.existsByEmail(request.getEmail())) {
+        if (customerRepository.existsByEmail(request.getEmail())) { //Check for duplicate email
             throw new DuplicateResourceException("Customer with email '" + request.getEmail() + "' already exists");
         }
-        Customer entity = customerMapper.toEntity(request);
-        Customer saved = customerRepository.save(entity);
+        Customer entity = customerMapper.toEntity(request); //Convert request → entity
+        Customer saved = customerRepository.save(entity); //Save entity
         log.info("Created customer id={} email={}", saved.getId(), saved.getEmail());
-        return customerMapper.toResponse(saved);
+        return customerMapper.toResponse(saved);//Convert saved entity → response
     }
 
     @Override
     @Transactional(readOnly = true)
-    public CustomerResponse getCustomerById(Long id) {
-        return customerMapper.toResponse(findEntityById(id));
+    public CustomerResponse getCustomerByEmail(String email) {
+        return customerMapper.toResponse(findEntityByEmail(email));
     }
 
-    @Override
+    //@Override
     @Transactional(readOnly = true)
     public List<CustomerResponse> getAllCustomers() {
         return customerRepository.findAll().stream()
@@ -53,10 +58,13 @@ public class CustomerServiceImpl implements CustomerService {
                 .toList();
     }
 
-    @Override
+    private Customer findEntityByEmail(String email) {
+        return customerRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with email '" + email + "' not found"));
+    }
     @Transactional
-    public CustomerResponse updateCustomer(Long id, CustomerRequest request) {
-        Customer existing = findEntityById(id);
+    public CustomerResponse updateCustomer(String email, CustomerRequest request) {
+        Customer existing = findEntityByEmail(email);
 
         if (!existing.getEmail().equalsIgnoreCase(request.getEmail())
                 && customerRepository.existsByEmail(request.getEmail())) {
@@ -69,16 +77,4 @@ public class CustomerServiceImpl implements CustomerService {
         return customerMapper.toResponse(saved);
     }
 
-    @Override
-    @Transactional
-    public void deleteCustomer(Long id) {
-        Customer existing = findEntityById(id);
-        customerRepository.delete(existing);
-        log.info("Deleted customer id={} email={}", id, existing.getEmail());
-    }
-
-    private Customer findEntityById(Long id) {
-        return customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer with id '" + id + "' not found"));
-    }
 }

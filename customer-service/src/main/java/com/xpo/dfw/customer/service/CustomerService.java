@@ -12,11 +12,11 @@ public interface CustomerService {
 
     CustomerResponse createCustomer(CustomerRequest request);
 
-    CustomerResponse getCustomerById(Long id);
+    CustomerResponse getCustomerByEmail(String email);
 
-    List<CustomerResponse> getAllCustomers();
+    //List<CustomerResponse> getAllCustomers();
 
-    CustomerResponse updateCustomer(Long id, CustomerRequest request);
+    //CustomerResponse updateCustomer(Long id, CustomerRequest request);
 
-    void deleteCustomer(Long id);
+    //void deleteCustomer(Long id);
 }
