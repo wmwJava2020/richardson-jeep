@@ -5,6 +5,8 @@ import com.xpo.dfw.inventory.dto.InventoryResponse;
 import com.xpo.dfw.inventory.entity.InventoryItem;
 import org.springframework.stereotype.Component;
 
+import java.util.logging.Logger;
+
 /**
  * Converts between {@link InventoryItem} entities and their DTO
  * representations. Kept as a small, explicit mapper (rather than pulling
@@ -13,7 +15,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class InventoryMapper {
 
+    private static final Logger log = Logger.getLogger(String.valueOf(InventoryMapper.class));
+
     public InventoryItem toEntity(InventoryRequest request) {
+        log.info("Mapping InventoryRequest to InventoryItem entity: " + request);
         return InventoryItem.builder()
                 .sku(request.getSku())
                 .productName(request.getProductName())
@@ -31,6 +36,7 @@ public class InventoryMapper {
      * fields.
      */
     public void updateEntity(InventoryItem entity, InventoryRequest request) {
+        log.info("Updating InventoryItem entity with InventoryRequest: " + request);
         entity.setSku(request.getSku());
         entity.setProductName(request.getProductName());
         entity.setDescription(request.getDescription());
