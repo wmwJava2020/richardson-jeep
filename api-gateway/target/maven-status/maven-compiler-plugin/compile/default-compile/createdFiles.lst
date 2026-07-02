@@ -1,0 +1,3 @@
+com\xpo\dfw\gateway\ApiGatewayApplication.class
+com\xpo\dfw\gateway\controller\FallbackController.class
+com\xpo\dfw\gateway\config\CorsConfig.class

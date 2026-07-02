@@ -1,0 +1,5 @@
+# Centrally-managed feature configuration for customer-service
+app:
+  customer:
+    default-page-size: 20
+    max-page-size: 100

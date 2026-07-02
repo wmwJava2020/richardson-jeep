@@ -1,0 +1,29 @@
+# Centrally-managed feature + resilience configuration for order-service.
+# Each instance below extends the shared "default" config defined in
+# application.yml and overrides only what differs for that dependency.
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventoryService:
+        base-config: default
+        wait-duration-in-open-state: 8s
+      customerService:
+        base-config: default
+      notificationService:
+        base-config: default
+        failure-rate-threshold: 60
+        wait-duration-in-open-state: 15s
+  retry:
+    instances:
+      inventoryService:
+        base-config: default
+      customerService:
+        base-config: default
+      notificationService:
+        base-config: default
+        max-attempts: 2
+
+app:
+  order:
+    auto-confirm: true
+    order-number-prefix: "RJ-ORD-"

@@ -1,0 +1,28 @@
+spring:
+  config:
+    import: optional:configserver:disabled
+  datasource:
+    url: jdbc:h2:mem:notification_db;DB_CLOSE_DELAY=-1;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+
+eureka:
+  client:
+    enabled: false
+
+management:
+  tracing:
+    sampling:
+      probability: 0
+
+app:
+  notification:
+    channels:
+      email-enabled: true
+      sms-enabled: true
+    simulated-delivery-delay-ms: 0

@@ -1,0 +1,17 @@
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\config\OpenApiConfig.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\controller\InventoryController.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\dto\InventoryRequest.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\dto\InventoryResponse.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\dto\StockReservationRequest.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\dto\StockReservationResponse.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\entity\InventoryItem.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\exception\DuplicateResourceException.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\exception\ErrorResponse.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\exception\GlobalExceptionHandler.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\exception\InsufficientStockException.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\exception\ResourceNotFoundException.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\InventoryServiceApplication.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\mapper\InventoryMapper.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\repository\InventoryRepository.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\service\impl\InventoryServiceImpl.java
+C:\Users\jack\java\project\richardson-jeep\inventory-service\src\main\java\com\xpo\dfw\inventory\service\InventoryService.java

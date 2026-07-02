@@ -1,0 +1,7 @@
+# Centrally-managed feature configuration for notification-service
+app:
+  notification:
+    channels:
+      email-enabled: true
+      sms-enabled: true
+    simulated-delivery-delay-ms: 0

@@ -1,0 +1,58 @@
+# ------------------------------------------------------------------
+# Shared configuration served to ALL Richardson-Jeep microservices
+# (api-gateway, inventory-service, order-service, notification-service,
+#  customer-service). Service-specific files in this same folder
+#  (e.g. order-service.yml) are layered on top of this file.
+# ------------------------------------------------------------------
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,circuitbreakers,circuitbreakerevents,env
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  health:
+    circuitbreakers:
+      enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+    tags:
+      application: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:-},%X{traceId:-},%X{spanId:-}]"
+  level:
+    root: INFO
+    com.xpo.dfw: DEBUG
+
+# Sensible Resilience4j defaults shared by every service. Individual
+# instances (per downstream dependency) are configured in each
+# service's own config file and reference this "default" base config.
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        register-health-indicator: true
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        permitted-number-of-calls-in-half-open-state: 3
+        wait-duration-in-open-state: 10s
+        failure-rate-threshold: 50
+        automatic-transition-from-open-to-half-open-enabled: true
+  retry:
+    configs:
+      default:
+        max-attempts: 3
+        wait-duration: 1s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2

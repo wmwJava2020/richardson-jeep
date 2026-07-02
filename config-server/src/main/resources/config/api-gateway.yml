@@ -1,0 +1,7 @@
+# Centrally-managed configuration for the API Gateway
+app:
+  gateway:
+    rate-limiter:
+      replenish-rate: 20
+      burst-capacity: 40
+      requested-tokens: 1

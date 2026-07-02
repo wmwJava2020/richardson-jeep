@@ -1,0 +1,5 @@
+# Centrally-managed feature configuration for inventory-service
+app:
+  inventory:
+    low-stock-alert-threshold: 5
+    allow-negative-stock: false
